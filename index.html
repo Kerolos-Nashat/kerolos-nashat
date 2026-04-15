@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowMart | Home</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span class="dot"></span> FlowMart</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <span id="user-welcome" style="display: none; margin-right: 10px; font-weight: 500;"></span>
+        <a href="#" id="logout-link" style="display: none; cursor: pointer;">Logout</a>
+        <a href="login.html" id="login-link">Login</a>
+        <a href="register.html" id="register-link">Register</a>
+        <a href="cart.html" class="cart-pill">Cart <span id="cart-count">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Featured slider">
+      <div id="slider-track"></div>
+      <div class="slider-controls">
+        <button id="prev-slide" aria-label="Previous slide">&#8249;</button>
+        <button id="next-slide" aria-label="Next slide">&#8250;</button>
+      </div>
+    </section>
+
+    <section class="filters" aria-label="Product filters">
+      <div class="filter-chip">
+        <span>Price</span>
+        <select id="price-filter">
+          <option value="all">All</option>
+          <option value="0-50">Under $50</option>
+          <option value="50-100">$50 - $100</option>
+          <option value="100-200">$100 - $200</option>
+          <option value="200+">$200+</option>
+        </select>
+      </div>
+      <div class="filter-chip">
+        <span>Size</span>
+        <select id="size-filter">
+          <option value="all">All</option>
+          <option value="XS">XS</option>
+          <option value="S">S</option>
+          <option value="M">M</option>
+          <option value="L">L</option>
+          <option value="XL">XL</option>
+        </select>
+      </div>
+    </section>
+
+    <section>
+      <div class="products-grid" id="product-list"></div>
+    </section>
+
+    <section class="assistant-shell" aria-label="AI assistant chat">
+      <div class="assistant-head">
+        <h2>FlowMart AI Assistant</h2>
+        <p>Ask anything about products, sizing, checkout, or order flow. Replies stay in full history so you can continue the same conversation through the backend proxy.</p>
+      </div>
+
+      <div class="assistant-toolbar">
+        <div class="assistant-control">
+          <label for="chat-model">Model</label>
+          <select id="chat-model">
+            <option value="gpt-4o-mini">gpt-4o-mini</option>
+            <option value="gpt-4.1-mini">gpt-4.1-mini</option>
+            <option value="gpt-5.4">gpt-5.4</option>
+          </select>
+        </div>
+        <button class="btn" id="chat-clear-history" type="button">Clear History</button>
+      </div>
+
+      <div id="chat-status" class="alert assistant-alert" role="status" aria-live="polite"></div>
+      <div id="chat-history" class="assistant-history" aria-live="polite"></div>
+
+      <form id="chat-form" class="assistant-form">
+        <label class="sr-only" for="chat-input">Chat prompt</label>
+        <input id="chat-image-input" type="file" accept="image/*" hidden />
+        <textarea id="chat-input" rows="3" placeholder="Type your message. Press Enter to send, Shift+Enter for a new line."></textarea>
+        <div class="assistant-upload-row">
+          <button class="btn btn-ghost" id="chat-image-pick" type="button">Upload Image</button>
+          <button class="btn" id="chat-image-remove" type="button">Remove Image</button>
+          <span id="chat-image-info" class="assistant-image-info">No image selected</span>
+        </div>
+        <div id="chat-image-preview-wrap" class="assistant-image-preview-wrap assistant-hidden">
+          <img id="chat-image-preview" class="assistant-image-preview" alt="Selected image preview" />
+        </div>
+        <div class="assistant-form-actions">
+          <button class="btn btn-primary" id="chat-send" type="submit">Send Message</button>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="brand"><span class="dot"></span> FlowMart</div>
+        <p>Your premium shopping destination for quality products.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-section">
+        <h4>Account</h4>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: kerolosnashat87@gmail.com</p>
+        <p>Phone: +201208878420</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nashat. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/slider.js"></script>
+  <script src="js/chat.js"></script>
+  <script>
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    if (currentUser && currentUser.name) {
+      const welcomeEl = document.getElementById('user-welcome');
+      welcomeEl.textContent = `Welcome, ${currentUser.name}!`;
+      welcomeEl.style.display = 'inline';
+      document.getElementById('login-link').style.display = 'none';
+      document.getElementById('register-link').style.display = 'none';
+      document.getElementById('logout-link').style.display = 'inline';
+    }
+
+    document.getElementById('logout-link').addEventListener('click', function(e) {
+      e.preventDefault();
+      localStorage.removeItem('currentUser');
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

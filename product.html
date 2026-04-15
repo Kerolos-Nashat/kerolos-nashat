@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FlowMart | Product</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div class="navbar">
+      <div class="brand"><span class="dot"></span> FlowMart</div>
+      <nav class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+        <a href="cart.html" class="cart-pill">Cart <span id="cart-count">0</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div id="product-shell" class="card" style="max-width: 960px; margin: 32px auto;">
+      <div id="product-content"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-section">
+        <div class="brand"><span class="dot"></span> FlowMart</div>
+        <p>Your premium shopping destination for quality products.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+      </div>
+      <div class="footer-section">
+        <h4>Account</h4>
+        <a href="login.html">Login</a>
+        <a href="register.html">Register</a>
+      </div>
+      <div class="footer-section">
+        <h4>Contact</h4>
+        <p>Email: kerolosnashat87@gmail.com</p>
+        <p>Phone: +201208878420</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Nashat. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const params = new URLSearchParams(window.location.search);
+      const productId = parseInt(params.get('id'), 10);
+      const product = findProductById(productId);
+      const container = document.getElementById('product-content');
+      if (!product) {
+        container.innerHTML = '<p>Product not found.</p>';
+        return;
+      }
+      container.innerHTML = `
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:center;">
+          <img src="${product.image}" alt="${product.name}" style="width:100%;border-radius:12px;object-fit:cover;box-shadow:var(--shadow);height:340px;" />
+          <div>
+            <div class="tag">${product.category} · ${product.size}</div>
+            <h2>${product.name}</h2>
+            <p class="price">$${product.price}</p>
+            <p>Crafted for everyday comfort with breathable materials and clean lines.</p>
+            <button class="btn btn-primary" onclick="addToCart(${product.id})">Add to Cart</button>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
